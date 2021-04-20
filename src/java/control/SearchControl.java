@@ -50,7 +50,7 @@ public class SearchControl extends HttpServlet {
             if(total % pageSize !=0){
                 maxPage++;
             }
-            //miinhbd
+            
             List<Digital> listSearch = digitalDAO.search(txt, index, pageSize);
             request.setAttribute("list", listSearch);
             request.setAttribute("maxPage", maxPage);
