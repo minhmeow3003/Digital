@@ -7,6 +7,7 @@ package control;
 
 import context.DBContext;
 import dao.DigitalDAO;
+import dao_inter.DigitalDAOInter;
 import entity.Digital;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,7 +44,7 @@ public class SearchControl extends HttpServlet {
                 pageIndex = "1";
             }
             int index = Integer.parseInt(pageIndex);
-            DigitalDAO digitalDAO = new DigitalDAO();
+            DigitalDAOInter digitalDAO = new DigitalDAO();
             int total = digitalDAO.count(txt);
             int pageSize = 2;
             int maxPage = total/pageSize;

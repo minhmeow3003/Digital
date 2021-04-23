@@ -1,5 +1,4 @@
 package entity;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 public class Digital {
     private int id;
@@ -22,12 +21,7 @@ public class Digital {
         this.timePost = timePost;
         this.shortDes = shortDes;
     }
-    public String getDateConvert() {
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat("MMM dd yyyy - hh:mm:");
-        SimpleDateFormat dateFormat2 = new SimpleDateFormat("a");
-        String date = dateFormat1.format(this.timePost) + dateFormat2.format(this.timePost).toLowerCase();
-        return date; 
-    }
+    
     public int getId() {
         return id;
     }

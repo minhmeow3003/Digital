@@ -30,7 +30,7 @@
                     <div class="signature">
                         <div class="icon1"></div>
                         <div class="icon2"></div>
-                         By ${top1.author} | ${top1.dateConvert}
+                         By ${top1.author} | ${top1Date}
                     </div>
                 </div>
                 <jsp:include page="Right.jsp"/> 

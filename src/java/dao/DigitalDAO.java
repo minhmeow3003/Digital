@@ -10,6 +10,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DigitalDAO extends DBContext implements DigitalDAOInter{
+    
+    @Override
+    public List<Digital> getTop(int top) throws Exception {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            List<Digital> list = new ArrayList<>();
+            String query = "select top (?) * from digital\n"
+                    + "where timePost not in(\n"
+                    + "select max(timepost) from digital\n"
+                    + ")\n"
+                    + "order by timePost desc";
+            conn = super.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, top);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Digital d = new Digital(rs.getInt("ID"),
+                        rs.getString("title"),
+                        rs.getString("description"),
+                        rs.getString("image"),
+                        rs.getString("author"),
+                        rs.getDate("timePost"),
+                        rs.getString("shortDes"));
+                list.add(d);
+            }
+            return list;
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            super.closeConnection(rs, ps, conn);
+        }
+    }
+    
 
     @Override
     public Digital getTop1() throws Exception {
@@ -167,4 +202,6 @@ public class DigitalDAO extends DBContext implements DigitalDAOInter{
             super.closeConnection(rs, ps, conn);
         }
     }
+
+    
 }

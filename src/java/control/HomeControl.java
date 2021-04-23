@@ -7,6 +7,7 @@ package control;
 
 import context.DBContext;
 import dao.DigitalDAO;
+import dao_inter.DigitalDAOInter;
 import entity.Digital;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import noneentity.DateFormat;
 
 /**
  *
@@ -33,10 +35,12 @@ public class HomeControl extends HttpServlet {
             String imagePath = bContext.getImagePath();
             request.setAttribute("imagePath", imagePath);
             //end of set imagePath
-            DigitalDAO digitalDAO = new DigitalDAO();
-            Digital top1 = digitalDAO.getTop1();
-            request.setAttribute("top1", top1);
-            List<Digital> list = digitalDAO.getTop5();
+            DigitalDAOInter digitalDAO = new DigitalDAO();
+            List<Digital> top1 = digitalDAO.getTop(1);
+            request.setAttribute("top1", top1.get(0));
+            DateFormat df = new DateFormat();
+            request.setAttribute("top1Date", df.getDateConvert(top1.get(0).getTimePost()));
+            List<Digital> list = digitalDAO.getTop(5);
             request.setAttribute("top5", list);
             
             request.getRequestDispatcher("HomePage.jsp").forward(request, response);

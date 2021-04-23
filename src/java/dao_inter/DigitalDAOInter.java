@@ -13,6 +13,8 @@ import java.util.List;
  * @author Acer
  */
 public interface DigitalDAOInter {
+     public List<Digital> getTop(int top) throws Exception;
+     
      public Digital getTop1() throws Exception;
      
      public Digital getOne(int id) throws Exception;

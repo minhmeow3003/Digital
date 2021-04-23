@@ -7,6 +7,7 @@ package control;
 
 import context.DBContext;
 import dao.DigitalDAO;
+import dao_inter.DigitalDAOInter;
 import entity.Digital;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import noneentity.DateFormat;
 
 /**
  *
@@ -44,16 +46,19 @@ public class DetailControl extends HttpServlet {
             //end of set imagePath
             //begin of set one
             int id = Integer.parseInt(request.getParameter("id"));
-            DigitalDAO digitalDAO = new DigitalDAO();
+            DigitalDAOInter digitalDAO = new DigitalDAO();
             Digital d = digitalDAO.getOne(id);
             request.setAttribute("one", d);
             //end of set one
             //begin of set short description
-            Digital top1 = digitalDAO.getTop1();
-            request.setAttribute("top1", top1);
+//            Digital top1 = digitalDAO.getTop1();
+            List<Digital> top1 = digitalDAO.getTop(1);
+            request.setAttribute("top1", top1.get(0));
+            DateFormat df = new DateFormat();
+            request.setAttribute("top1Date", df.getDateConvert(d.getTimePost()));
             //end of set short description
             //begin of set list 
-            List<Digital> list = digitalDAO.getTop5();
+            List<Digital> list = digitalDAO.getTop(5);
             request.setAttribute("top5", list);
             //end of set list
             request.getRequestDispatcher("Detail.jsp").forward(request, response);
